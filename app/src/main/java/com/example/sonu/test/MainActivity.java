@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText input1, input2;
     TextView output;
-    Button add, subtract, clear;
+    Button add, subtract, clear, multiply, divide;
     int first, second;
     int ans;
     private String string_input1;
@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         add = (Button) findViewById(R.id.add);
         subtract = (Button) findViewById(R.id.subtract);
         clear = (Button) findViewById(R.id.clear);
+        multiply = (Button) findViewById(R.id.mul);
+        divide = (Button) findViewById(R.id.divide);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +67,24 @@ public class MainActivity extends AppCompatActivity {
                 input2.setText("");
                 output.setText("");
                 input1.requestFocus();
+            }
+        });
+
+        multiply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getInput();
+                ans = first * second;
+                output.setText(Integer.toString(ans));
+            }
+        });
+
+        divide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getInput();
+                ans = first / second;
+                output.setText(Integer.toString(ans));
             }
         });
 
