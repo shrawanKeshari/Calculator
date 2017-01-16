@@ -10,12 +10,21 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
+
+    EditText input1, input2;
+    TextView output;
+    Button add, subtract, clear;
+    int first, second;
+    int ans;
+    private String string_input1;
+    private String string_input2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,26 +33,57 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        input1 = (EditText) findViewById(R.id.editText);
+        input2 = (EditText) findViewById(R.id.editText2);
+        output = (TextView) findViewById(R.id.textView);
+        add = (Button) findViewById(R.id.add);
+        subtract = (Button) findViewById(R.id.subtract);
+        clear = (Button) findViewById(R.id.clear);
 
-                EditText et = (EditText) findViewById(R.id.editText);
-                String s = et.getText().toString();
-                Snackbar.make(view, "You Enter: " + s, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getInput();
+                ans = first + second;
+                output.setText(Integer.toString(ans));
             }
         });
 
-        findViewById(R.id.mainactivity).setOnTouchListener(new View.OnTouchListener() {
+        subtract.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
-                return false;
+            public void onClick(View v) {
+                getInput();
+                ans = first - second;
+                output.setText(Integer.toString(ans));
             }
         });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                input1.setText("");
+                input2.setText("");
+                output.setText("");
+                input1.requestFocus();
+            }
+        });
+
+    }
+
+    private void getInput() {
+        string_input1 = input1.getText().toString();
+        string_input2 = input2.getText().toString();
+
+        try{
+            first = Integer.parseInt(string_input1);
+        }catch (NumberFormatException e){
+            first = 0;
+        }
+        try{
+            second = Integer.parseInt(string_input2);
+        }catch (NumberFormatException e){
+            second = 0;
+        }
     }
 
     @Override
